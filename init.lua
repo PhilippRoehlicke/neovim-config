@@ -101,11 +101,19 @@ vim.keymap.set("n", "<leader>ö", "<C-w>w", { desc = "Move to the next window" }
 
 -- keybind to open :Explorer easily
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { desc = "Open [E]xplorer" })
-vim.keymap.set("n", "<leader>l", "<cmd>Lexplore<CR>", { desc = "Toggle [L]left Explorer" })
+-- vim.keymap.set("n", "<leader>l", "<cmd>Lexplore<CR>", { desc = "Toggle [L]left Explorer" })
+vim.keymap.set("n", "<leader>l", function()
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+  print(git_root)
+  if vim.v.shell_error == 0 and git_root then
+    vim.cmd("Explore" .. git_root)
+  else
+    print("Not in a Git repository.")
+  end
+end, { desc = "Open [E]xplorer at Git Root" })
 
 -- keybind macro recording and playback
-vim.keymap.set("n", "<leader>q", "qz", { desc = "Start/stop recording macro" })
-vim.keymap.set("n", "Q", "@z", { desc = "Playback macro" })
+vim.keymap.set("n", "Q", "@q", { desc = "Playback macro" })
 
 -- [[ Basic Autocommands ]]
 -- See `:help lua-guide-autocommands`

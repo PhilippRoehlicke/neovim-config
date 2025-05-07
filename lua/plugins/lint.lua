@@ -11,7 +11,11 @@ return {
       -- Automatically lint on cursor idle in normal mode
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "CursorHold" }, {
         callback = function()
-          lint.try_lint()
+          local file_path = vim.fn.expand("%:p") -- Get the full file path
+
+          if file_path:find("/.github/") then
+            lint.try_lint()
+          end
         end,
       })
 
