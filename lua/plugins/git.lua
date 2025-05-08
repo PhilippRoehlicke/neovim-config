@@ -12,12 +12,14 @@ return {
       vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Open Neogit" })
 
       neogit.setup({
+        kind = "vsplit",
         disable_commit_confirmation = true,
         disable_insert_on_commit = false,
         integrations = {
           diffview = true,
           telescope = true,
         },
+        graph_style = "unicode",
       })
     end,
   },

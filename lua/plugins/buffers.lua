@@ -7,6 +7,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local harpoon = require("harpoon")
+      ---@diagnostic disable-next-line: missing-parameter
       harpoon.setup()
 
       -- basic telescope configuration

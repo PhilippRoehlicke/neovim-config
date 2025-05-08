@@ -87,21 +87,13 @@ vim.keymap.set("n", "<leader>qf", vim.diagnostic.setloclist, { desc = "Open diag
 -- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true, desc = "Exit terminal mode" })
 vim.keymap.set("n", "T", "<cmd>terminal<CR>", { desc = "Open a new [T]erminal" })
--- vim.keymap.set("terminal", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Keybinds to make split navigation easier.
--- Use CTRL+<hjkl> to switch between windows
--- See `:help wincmd` for a list of all window commands
--- vim.keymap.set("n", "<A-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
--- vim.keymap.set("n", "<A-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
--- vim.keymap.set("n", "<A-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
--- vim.keymap.set("n", "<A-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-vim.keymap.set("n", "<leader>v", "<C-w>v<cmd>Explore<CR>", { desc = "Split window vertically and open Explorer" })
+vim.keymap.set("n", "<leader>v", "<C-w>v<cmd>Explore<CR>", { desc = "Split window [v]ertically and open Explorer" })
 vim.keymap.set("n", "<leader>ö", "<C-w>w", { desc = "Move to the next window" })
 
 -- keybind to open :Explorer easily
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { desc = "Open [E]xplorer" })
--- vim.keymap.set("n", "<leader>l", "<cmd>Lexplore<CR>", { desc = "Toggle [L]left Explorer" })
 vim.keymap.set("n", "<leader>l", function()
   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   print(git_root)
@@ -122,7 +114,7 @@ vim.keymap.set("n", "Q", "@q", { desc = "Playback macro" })
 -- See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
-  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
