@@ -1,5 +1,4 @@
 return {
-
   -- Switch between the currently used files very fast
   {
     "ThePrimeagen/harpoon",
@@ -12,18 +11,15 @@ return {
 
       -- basic telescope configuration
 
-      vim.keymap.set("n", "<C-e>", function()
+      vim.keymap.set("n", "<C-h>", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end)
-      vim.keymap.set("n", "<leader>a", function()
+      vim.keymap.set("n", "<leader>ha", function()
         harpoon:list():add()
-      end)
-      vim.keymap.set("n", "<leader>ad", function()
-        harpoon:list():remove()
-      end)
-      vim.keymap.set("n", "<leader>af", function()
+      end, { desc = "[a]dd buffer to harpoon" })
+      vim.keymap.set("n", "<leader>hd", function()
         harpoon:list():clear()
-      end)
+      end, { desc = "[d]elete all harpoon entries" })
 
       vim.keymap.set("n", "<C-a>", function()
         harpoon:list():select(1)
@@ -31,10 +27,10 @@ return {
       vim.keymap.set("n", "<C-s>", function()
         harpoon:list():select(2)
       end)
-      vim.keymap.set("n", "<C-S-A>", function()
+      vim.keymap.set("n", "<C-y>", function()
         harpoon:list():select(3)
       end)
-      vim.keymap.set("n", "<C-S-S>", function()
+      vim.keymap.set("n", "<C-x>", function()
         harpoon:list():select(4)
       end)
       --
@@ -48,15 +44,28 @@ return {
     end,
   },
   {
-    "rmagatti/auto-session",
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- Load early
     opts = {
-      log_level = "error",
-      auto_session_enable_last_session = false,
-      auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-      auto_session_enabled = true,
-      auto_save_enabled = true,
-      auto_restore_enabled = true,
-      auto_session_suppress_dirs = { "~/", "/" },
+      dir = vim.fn.stdpath("state") .. "/sessions/",
+      options = { "buffers", "curdir", "tabpages", "winsize" },
+      pre_save = function()
+        -- Clean up hidden buffers before saving
+        for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+          if not vim.fn.bufwinnr(buf.bufnr) or vim.fn.bufwinnr(buf.bufnr) == -1 then
+            vim.api.nvim_buf_delete(buf.bufnr, { force = true })
+          end
+        end
+      end,
+    },
+    keys = {
+      {
+        "<leader>qr",
+        function()
+          require("persistence").load()
+        end,
+        desc = "Restore Session",
+      },
     },
   },
 }
