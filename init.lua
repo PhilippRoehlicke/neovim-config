@@ -30,7 +30,7 @@ vim.opt.breakindent = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
-vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.expandtab = true
 
 -- Save undo history
 vim.opt.undofile = true
@@ -77,8 +77,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Center the cursor after jumpin
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Center the cursor after jumping up" })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.get_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.get_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>er", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>qf", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -90,16 +90,16 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true, des
 vim.keymap.set("n", "T", "<cmd>terminal<CR>", { desc = "Open a new [T]erminal" })
 
 -- Keybinds to make split navigation easier.
-vim.keymap.set("n", "<leader>v", "<C-w>v<cmd>Explore<CR>", { desc = "Split window [v]ertically and open Explorer" })
+vim.keymap.set("n", "<leader>v", "<C-w>v<cmd>Oil<CR>", { desc = "Split window [v]ertically and open Oil" })
 vim.keymap.set("n", "<leader>ö", "<C-w>w", { desc = "Move to the next window" })
 
 -- keybind to open :Explorer easily
-vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { desc = "Open [E]xplorer" })
+vim.keymap.set("n", "<leader>e", "<cmd>Oil<CR>", { desc = "Open [E]xplorer" })
 vim.keymap.set("n", "<leader>l", function()
   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   print(git_root)
   if vim.v.shell_error == 0 and git_root then
-    vim.cmd("Explore" .. git_root)
+    vim.cmd("Oil" .. git_root)
   else
     print("Not in a Git repository.")
   end
